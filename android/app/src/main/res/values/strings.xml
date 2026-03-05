@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">mi-primer-ios-proyect</string>
-    <string name="title_activity_main">mi-primer-ios-proyect</string>
-    <string name="package_name">mi.primer.ios.proyect</string>
-    <string name="custom_url_scheme">mi.primer.ios.proyect</string>
+    <string name="app_name">mi-primer-ios-project</string>
+    <string name="title_activity_main">mi-primer-ios-project</string>
+    <string name="package_name">mi.primer.ios.project</string>
+    <string name="custom_url_scheme">mi.primer.ios.project</string>
 </resources>
