@@ -21,14 +21,19 @@
                             <ion-label><i :class="menu.icon" aria-hidden="true"></i> {{ menu.name }}</ion-label>
                         </ion-item>
                         <div slot="content">
-                            <ion-menu-toggle :auto-hide="true" v-for="(item, keyItem) in menu.sub" :key="keyItem" >
-                                <ion-item 
-                                    :router-link="'/'+item.url"
-                                    @click="contentStore.$getContenido(item.internal_name)"
+                            <template v-for="(item, keyItem) in menu.sub" :key="keyItem" >
+                                <ion-menu-toggle 
+                                    :auto-hide="true" 
+                                    v-if="item.active === 'yes'"
                                     >
-                                    <ion-label>{{ item.name }}</ion-label>
-                                </ion-item>
-                            </ion-menu-toggle>
+                                    <ion-item 
+                                        :router-link="'/'+item.url"
+                                        @click="contentStore.$getContenido(item.internal_name)"
+                                        >
+                                        <ion-label>{{ item.name }}</ion-label>
+                                    </ion-item>
+                                </ion-menu-toggle>
+                            </template>
                         </div>
                     </ion-accordion>
                 </ion-accordion-group>

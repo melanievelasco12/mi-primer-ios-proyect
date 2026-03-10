@@ -39,10 +39,12 @@ export const useUserStore = defineStore('user', () => {
             localStorage.setItem('user', JSON.stringify(data.user));
             user.value = data.user;
             contentStore.$setMenu(data.menu);
+            contentStore.$setHome(data.home);
         } else {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             localStorage.removeItem('menu');
+            localStorage.removeItem('home');
         }
     }
 
