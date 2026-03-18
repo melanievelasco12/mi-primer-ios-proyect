@@ -82,13 +82,14 @@ if(!route.params.name){
 </script>
 
 <style scoped>
+
   ion-menu::part(backdrop) {
-    background-color: rgba(255, 0, 255, 0.5);
+    background-color: rgba(17, 227, 241, 0.993);
   }
 
   ion-menu::part(container) {
     border-radius: 0 20px 20px 0;
 
-    box-shadow: 4px 0px 16px rgba(255, 0, 255, 0.18);
+    box-shadow: 4px 0px 16px rgba(2, 132, 238, 0.856);
   }
 </style>
