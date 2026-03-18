@@ -17,41 +17,59 @@
         </ion-content>
         <ion-footer :translucent="true" v-if="!contentStore.loading && contentStore.content.contenido">
             <ion-toolbar>
-            <ion-button slot="end" fill="solid" size="small">Siguiente</ion-button>
+            <ion-button slot="end" fill="solid" size="small" @click="siguiente">Siguiente</ion-button>
             </ion-toolbar>
         </ion-footer>
-        <ion-list v-else>
-            <ion-list-header>
-            <ion-skeleton-text :animated="true" style="width: 30%"></ion-skeleton-text>
-            </ion-list-header>
-            <ion-item>
-            <ion-thumbnail slot="start">
-                <ion-skeleton-text :animated="true"></ion-skeleton-text>
-            </ion-thumbnail>
-            <ion-label>
-                <h3>
-                <ion-skeleton-text :animated="true" style="width: 80%;"></ion-skeleton-text>
-                </h3>
-                <p>
-                <ion-skeleton-text :animated="true" style="width: 60%;"></ion-skeleton-text>
-                </p>
-                <p>
-                <ion-skeleton-text :animated="true" style="width: 30%;"></ion-skeleton-text>
-                </p>
-            </ion-label>
-            </ion-item>
-        </ion-list>
+        <Skeleton v-else></Skeleton>
     </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton, IonList, IonListHeader,
-    IonSkeletonText, IonItem, IonThumbnail, IonLabel
- } from '@ionic/vue';
-import { useRoute } from 'vue-router';
+import { IonPage, IonToolbar, IonContent, IonFooter, IonButton } from '@ionic/vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useContentStore } from '@/stores/content';
+import Skeleton from '@/components/Skeleton.vue';
 const route = useRoute();
+const router = useRouter();
 const contentStore = useContentStore();
+
+checkNext();
+
+function checkNext(){
+    let i = 0;
+    contentStore.menu.map( (item: any) => {
+        item.sub.map( (sub_item: any) => {
+            if(i === 1){
+                contentStore.$setNext(sub_item)
+                i++;
+            }
+            if(sub_item.internal_name === route.params.name){
+                i++;
+            }
+        })
+    })
+}
+
+function setNext(){
+    contentStore.menu.map( (item: any) => {
+        item.sub.map( (sub_item: any) => {
+            
+            if(sub_item.id === contentStore.next.id){
+                sub_item.active = 'yes';
+                localStorage.setItem('home', JSON.stringify(contentStore.next));
+            }
+        })
+    })
+    localStorage.setItem('menu', JSON.stringify(contentStore.menu));
+}
+
+function siguiente(){
+    setNext();
+    contentStore.$getContenido(contentStore.next.internal_name).then( () => {
+        contentStore.$seteaSiguiente();
+        router.push('/'+contentStore.next.url);
+    })
+}
 </script>
 <style scoped>
 .video-container {

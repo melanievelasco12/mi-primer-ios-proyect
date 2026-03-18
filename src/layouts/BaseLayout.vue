@@ -72,8 +72,12 @@ async function logout() {
     router.push('/login');
 }
 
-if(!contentStore.content.to){
+if(!contentStore.content.to && route.params.name){
     contentStore.$getContenido(route.params.name as string);
+}
+if(!route.params.name){
+    contentStore.$getContenido(contentStore.home.internal_name as string);
+    router.push({ path: '/'+contentStore.home.url });
 }
 </script>
 

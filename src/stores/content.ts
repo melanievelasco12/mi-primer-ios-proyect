@@ -15,7 +15,13 @@ export const useContentStore = defineStore('content', () => {
     })
 
     const home = ref((localStorage.getItem('home')) ? JSON.parse(localStorage.getItem('home') as string): {
+        url: null,
+    })
 
+    const next = ref({
+        url: null,
+        internal_name: '',
+        id: null,
     })
 
     const loading = ref(false);
@@ -38,6 +44,10 @@ export const useContentStore = defineStore('content', () => {
         }
     }
 
+    function $setNext(data: any | null){
+        next.value = data || {};
+    }
+
     function $getContenido(name: string){
         loading.value = true;
         return axiosRiksiri.get('contenido/'+name).then( res => {
@@ -46,6 +56,10 @@ export const useContentStore = defineStore('content', () => {
             return res.data;
         }); 
     }
-    return { content, menu, loading, $setMenu, $getContenido, home, $setHome }
+
+    function $seteaSiguiente(){
+        return axiosRiksiri.post('seteasiguiente', next.value)
+    }
+    return { content, menu, loading, $setMenu, $getContenido, home, $setHome, next, $setNext, $seteaSiguiente }
 
 });
